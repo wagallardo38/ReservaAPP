@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Reservas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <!--<link rel="stylesheet" href="reset.css"> -->
+    <link rel="stylesheet" href="styleboard.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>ReservaApp</h2>
+            <div class="user-info">
+                <img src="/api/placeholder/80/80" alt="Foto de perfil">
+                <h3 id="userName">Usuario</h3>
+                <p>Bienvenido</p>
+            </div>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-view="welcomeView">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </div>
+            <div class="menu-item" data-view="reservationsView">
+                <i class="fas fa-calendar-check"></i>
+                <span>Mis Reservas</span>
+            </div>
+            <div class="menu-item" data-view="newReservationView">
+                <i class="fas fa-plus-circle"></i>
+                <span>Nueva Reserva</span>
+            </div>
+            <div class="menu-item" data-view="historyView">
+                <i class="fas fa-history"></i>
+                <span>Historial</span>
+            </div>
+            <div class="menu-item" data-view="profileView">
+                <i class="fas fa-user"></i>
+                <span>Mi Perfil</span>
+            </div>
+            <div class="menu-item" data-view="settingsView">
+                <i class="fas fa-cog"></i>
+                <span>Configuración</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="content-header">
+            <h1 id="sectionTitle">Inicio</h1>
+            <div>
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+        </div>
+
+        <!-- Welcome View -->
+        <div id="welcomeView" class="view-section active">
+            <div class="content-body">
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h2>¡Bienvenido de nuevo, <span id="welcomeUserName">Usuario</span>!</h2>
+                        <p>Aquí puedes gestionar todas tus reservas. Seleccione una opción en el menú para comenzar.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px; background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
+                            <h3><i class="fas fa-calendar-check"></i> Próxima Reserva</h3>
+                            <p>Tienes una reserva programada para mañana a las 10:00 AM.</p>
+                            <button class="btn btn-primary" style="margin-top: 10px;">Ver Detalles</button>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; background-color: #e8f5e9; padding: 20px; border-radius: 8px;">
+                            <h3><i class="fas fa-bell"></i> Notificaciones</h3>
+                            <p>Tienes 3 notificaciones nuevas.</p>
+                            <button class="btn btn-primary" style="margin-top: 10px;">Ver Todas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Reservations View -->
+        <div id="reservationsView" class="view-section">
+            <div class="content-body">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTable">
+                            <!-- Data will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Reservation View -->
+        <div id="newReservationView" class="view-section">
+            <div class="content-body">
+                <h2>Crear Nueva Reserva</h2>
+                <form id="newReservationForm">
+                    <div class="form-group">
+                        <label for="reservationType">Tipo de Habitación</label>
+                        <select id="reservationType" class="form-control">
+                            <option value="">Seleccione un tipo</option>
+                            <option value="Sencilla">Habitación Sencilla</option>
+                            <option value="Doble">Habitación Doble</option>
+                            <option value="Multiple">Habitación Múltiple</option>
+                            <option value="Suite">Suite</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationDate">Fecha de Entrada</label>
+                            <input type="date" id="reservationDate" class="form-control">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationTimeIn">Hora de Entrada</label>
+                            <input type="time" id="reservationTimeIn" class="form-control" value="14:00">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationDateOut">Fecha de Salida</label>
+                            <input type="date" id="reservationDateOut" class="form-control">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationTimeOut">Hora de Salida</label>
+                            <input type="time" id="reservationTimeOut" class="form-control" value="12:00">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationPeople">Número de Personas</label>
+                            <input type="number" id="reservationPeople" class="form-control" min="1" value="1">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="reservationNights">Número de Noches</label>
+                            <input type="number" id="reservationNights" class="form-control" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Servicios Adicionales</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                            <div>
+                                <input type="checkbox" id="serviceBreakfast"> 
+                                <label for="serviceBreakfast">Desayuno</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="serviceLunch"> 
+                                <label for="serviceLunch">Almuerzo</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="serviceDinner"> 
+                                <label for="serviceDinner">Cena</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="serviceParking"> 
+                                <label for="serviceParking">Parqueadero</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="serviceInternet"> 
+                                <label for="serviceInternet">Internet Premium</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reservationNotes">Preferencias / Comentarios</label>
+                        <textarea id="reservationNotes" class="form-control" rows="4" placeholder="Indique cualquier preferencia o necesidad especial para su estadía..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear Reserva</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- History View -->
+        <div id="historyView" class="view-section">
+            <div class="content-body">
+                <h2>Historial de Reservas</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTable">
+                            <!-- Data will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View -->
+        <div id="profileView" class="view-section">
+            <div class="content-body">
+                <h2>Mi Perfil</h2>
+                <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+                    <img src="/api/placeholder/150/150" alt="Foto de perfil" class="profile-photo">
+                    <button class="btn btn-secondary">Cambiar foto</button>
+                </div>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="profileName">Nombre completo</label>
+                        <input type="text" id="profileName" class="form-control" value="Usuario Ejemplo">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileEmail">Correo electrónico</label>
+                        <input type="email" id="profileEmail" class="form-control" value="usuario@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePhone">Teléfono</label>
+                        <input type="tel" id="profilePhone" class="form-control" value="+1234567890">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settingsView" class="view-section">
+            <div class="content-body">
+                <h2>Configuración</h2>
+                <h3>Personalización</h3>
+                <div class="settings-section" style="display: block;">
+                    <h4>Tema de color</h4>
+                    <div class="color-option">
+                        <div class="color-preview" style="background-color: #3498db;" data-theme="blue"></div>
+                        <div>Azul (Predeterminado)</div>
+                    </div>
+                    <div class="color-option">
+                        <div class="color-preview" style="background-color: #2ecc71;" data-theme="green"></div>
+                        <div>Verde</div>
+                    </div>
+                    <div class="color-option">
+                        <div class="color-preview" style="background-color: #e74c3c;" data-theme="red"></div>
+                        <div>Rojo</div>
+                    </div>
+                    <div class="color-option">
+                        <div class="color-preview" style="background-color: #9b59b6;" data-theme="purple"></div>
+                        <div>Púrpura</div>
+                    </div>
+                    <div class="color-option">
+                        <div class="color-preview" style="background-color: #34495e;" data-theme="dark"></div>
+                        <div>Oscuro</div>
+                    </div>
+                </div>
+                <h3>Notificaciones</h3>
+                <div class="settings-section" style="display: block;">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Recibir notificaciones por correo electrónico
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Recibir notificaciones push
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Recordatorios de reservas
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservation Details Modal -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalles de Reserva</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="reservationDetails">
+                <!-- Details will be added dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="editReservation">Modificar</button>
+                <button class="btn btn-danger" id="cancelReservation">Cancelar Reserva</button>
+                <button class="btn btn-secondary" id="printReservation">Imprimir PDF</button>
+                <button class="btn btn-secondary" id="closeModal">Volver</button>
+            </div>
+        </div>
+    </div>
+    <script src="board.js" defer></script>
+</body>
+</html>
