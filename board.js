@@ -297,17 +297,7 @@
                 console.error('No se encontró el elemento de menú para cerrar sesión');
             }
         });
-
-        // Función alternativa si prefieres tener la función separada
-        function cerrarSesion() {
-            // Eliminar datos de autenticación
-            sessionStorage.removeItem('authenticated');
-            sessionStorage.removeItem('username');
-            
-            // Redirigir al index
-            window.location.href = 'index.html';
-        }
-
+        
 
         // Initialize tables
         populateReservationsTable();
