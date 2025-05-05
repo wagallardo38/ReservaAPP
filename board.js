@@ -297,7 +297,7 @@
                 console.error('No se encontró el elemento de menú para cerrar sesión');
             }
         });
-        
+
 
         // Initialize tables
         populateReservationsTable();
