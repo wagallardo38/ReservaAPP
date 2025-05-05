@@ -1,4 +1,4 @@
-
+//import { login } from "auth.js";
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const emailInput = document.getElementById('email');
@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
             loginErrorMessage.style.display = 'block';
         }
     }
+
+    
+    // login(); // Esto imprimirá "Hola desde archivo1"
     
     // Simulación de validación en el servidor (esto NO debe hacerse así en producción)
     function simulateServerValidation(email, password) {

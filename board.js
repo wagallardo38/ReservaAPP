@@ -1,8 +1,8 @@
 
         // Mock data for user
         const userData = {
-            name: "Carlos Rodríguez",
-            email: "carlos@ejemplo.com",
+            name: "Usuario Ejemplo",
+            email: "usuario@ejemplo.com",
             phone: "+1234567890"
         };
 
@@ -271,6 +271,43 @@
             // Show success message
             alert('Perfil actualizado con éxito');
         });
+        
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+        // Buscar el elemento del menú para cerrar sesión
+            const logoutMenuItem = document.querySelector('.menu-item[data-view="closedashboard"]');
+            
+            // Añadir evento de clic al elemento de cierre de sesión
+            if (logoutMenuItem) {
+                logoutMenuItem.addEventListener('click', function() {
+                    // Eliminar datos de autenticación del sessionStorage
+                    sessionStorage.removeItem('authenticated');
+                    sessionStorage.removeItem('username');
+                    
+                    // También puedes eliminar cualquier otro dato de sesión que hayas guardado
+                    // sessionStorage.removeItem('otrosDatos');
+                    
+                    // Opcional: Mostrar mensaje de despedida
+                    alert('Sesión cerrada correctamente. ¡Hasta pronto!');
+                    
+                    // Redirigir al usuario a la página de inicio (index.html)
+                    window.location.href = 'index.html';
+                });
+            } else {
+                console.error('No se encontró el elemento de menú para cerrar sesión');
+            }
+        });
+
+        // Función alternativa si prefieres tener la función separada
+        function cerrarSesion() {
+            // Eliminar datos de autenticación
+            sessionStorage.removeItem('authenticated');
+            sessionStorage.removeItem('username');
+            
+            // Redirigir al index
+            window.location.href = 'index.html';
+        }
+
 
         // Initialize tables
         populateReservationsTable();
